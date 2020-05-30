@@ -11,26 +11,8 @@ def bytesToNum(bytes)
     return num
 end
 
-def numToBytes(num,count)
-    bytes = Array.new
-    counter = 0.upto((count-1)).map {|b| b}
-    counter.size.times do |t|
-        bytes.push ((num >> (counter[t] * 8)) & 0xff)
-    end
-    return bytes
-end
-
 def read_file(path)
     return IO.binread(path).bytes
-end
-
-def combine_files(files_arr)
-    header = files_arr[0][0..0x17]
-    width = 0
-    files_arr.each {|file| width += bytesToNum file[0x14..0x15]}
-    header[0x14] = width
-    combined_file = header + files_arr[0][0x18..-1] + files_arr[1][0x18..-1]
-    return combined_file
 end
 
 def unpack_data(file,count)
